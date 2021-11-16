@@ -83,10 +83,82 @@ JustDropIt is an app that allows you to anonymously post comments about your cla
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+| Property | Type   | Description |
+|----------|--------|-----------|
+| ObjectId | String | Unique id for the user post |
+| Author   |Pointer to User| Name of author |
+| Media    | file   | Song that user posts |
+| Caption | String | Song caption by author |
+| CommentCount | interger |Number of comments made to the post |
+| UpVotes | interger |Number of likes on the post |
+| DownVotes | interger |Number of dislikes on the post |
+| createdAt | DateTime | Date when post was created |
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
+<!--- [Add list of network requests by screen ] -->
+#### List of network requests by screen 
+
+* Home feed screen:
+  * (Read/Get) Query all university name
+  
+```Swift 
+    let queryA = PFQuery(className: “University”)
+query.whereKey(“university”, equalTo: currentUniversity)
+query.order(byAscending: “Name”)
+query.findObjectsInBackground {(schools: [PFObject]?, error: Error?) in
+	If let error = error {
+		print (error.localizedDescription)
+	} else if let schools = schools {
+		print(“Successfully retrieved \(school.count) schools.”)
+    }
+```
+  * (Read/Get) Query all professor/faculty names
+
+```Swift
+let queryB = PFQuery(className: “Prof”)
+query.whereKey(“prof”, equalTo: currentProfessor)
+query.order(byAscending: “Name”)
+query.findObjectsInBackground {(profs: [PFObject]?, error: Error?) in
+	If let error = error {
+		print (error.localizedDescription)
+	} else if let profs = profs {
+		print(“Successfully retrieved \(profs.count) professors.”)
+}
+
+```
+  *  (Read/Get) Query all the posts under prof/faculty name
+
+```Swift
+let queryC = PFQuery(className: “Posts”)
+query.whereKey(“prof”, equalTo: currentProfessor)
+query.order(byDescending: “createdBy”)
+query.findObjectsInBackground {(posts: [PFObject]?, error: Error?) in
+	If let error = error {
+		print (error.localizedDescription)
+	} else if let posts = posts {
+		print(“Successfully retrieved \(posts.count) post.”)
+}
+
+```
+* Create Post screen:
+  * Create new post object
+
+```Swift
+let post = PFObject(className: Posts)
+post[“post”] = “Hi”
+post[“author”] = “User123456789”
+post[“CreatedBy”] = “Mar 5”
+post.saveInBackground { (succeeded, error) in
+	If (succedded) {
+		// the object had been saved.
+	} else { 
+		// there was problem
+}
+}
+
+```
+
+<!-- - [Create basic snippets for each Parse network request] -->
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
