@@ -86,6 +86,7 @@ JustDropIt is an app that allows you to anonymously post comments about your cla
 
 
 ### Models
+#### Post
 | Property | Type | Description |
 | -------- | -------- | -------- |
 | ObjectID     | String     | Unique id for the user post     |
@@ -96,6 +97,21 @@ JustDropIt is an app that allows you to anonymously post comments about your cla
 | Likes | integer | Number of likes |
 | createdAt | DateTime | Name of author |
 | Author | Pointer to User | Date when post was created |
+| Comments | Pointer to Comments | Comments on the post |
+
+#### Professor
+| Property | Type | Description |
+| -------- | -------- | -------- |
+| ProfessorName     | String     | Name of professor |
+| Posts | Pointer to Posts | Posts mentioning the professor |
+| PostCount | integer | Number of posts on Professor |
+
+#### User
+| Property | Type | Description |
+| -------- | -------- | -------- |
+| Username     | String     | Username |
+| Posts | Pointer to Posts | Posts |
+| PostCount | integer | Number of posts on Professor |
 
 
 ### Networking
